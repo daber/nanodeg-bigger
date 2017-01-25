@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -90,12 +91,17 @@ public class MainActivityFree extends AppCompatActivity {
       @Override
       protected void onPostExecute(String result) {
         indicateLoading(false);
-        Intent i = new Intent(MainActivityFree.this, JokeActivity.class);
-        i.putExtra(JokeActivity.EXTRA_JOKE, result);
-        startActivity(i);
+        if(result!=null) {
+          Intent i = new Intent(MainActivityFree.this, JokeActivity.class);
+          i.putExtra(JokeActivity.EXTRA_JOKE, result);
+          startActivity(i);
+        }else{
+          Toast.makeText(MainActivityFree.this, R.string.error_failed_joke_fetch,Toast.LENGTH_LONG).show();
+        }
       }
     };
     task.execute();
+
 
   }
 

@@ -15,6 +15,7 @@ package com.udacity.gradle.builditbigger.async;
 import android.content.Context;
 import android.os.AsyncTask;
 import com.example.mdabrowski.myapplication.backend.myApi.MyApi;
+import com.example.mdabrowski.myapplication.backend.myApi.model.JokeBean;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -50,9 +51,13 @@ public abstract class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     }
 
     try {
-      return myApiService.sayJoke().execute().getJoke();
+
+      AbstractGoogleClientRequest<JokeBean> request =myApiService.sayJoke();
+      JokeBean bean = request.execute();
+
+      return bean.getJoke();
     } catch (IOException e) {
-      return e.getMessage();
+      return null;
     }
   }
 
